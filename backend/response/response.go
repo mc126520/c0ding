@@ -12,11 +12,6 @@ type Response struct {
 	Status int         `json:"status"`
 }
 
-type Error struct {
-	Status int
-	Msg    string
-}
-
 func SuccessWithData(c *gin.Context, msg string, data interface{}, status int) {
 	c.JSON(http.StatusOK, Response{
 		Msg:    msg,
@@ -34,7 +29,7 @@ func SuccessWithNoData(c *gin.Context, msg string, status int) {
 }
 
 func FailBadRequest(c *gin.Context, status int, msg string) {
-	c.JSON(http.StatusBadRequest, Error{
+	c.JSON(http.StatusBadRequest, Response{
 		Status: 400,
 		Msg:    msg,
 	})
