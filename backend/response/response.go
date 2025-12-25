@@ -9,10 +9,15 @@ import (
 type Response struct {
 	Msg    string      `json:"msg"`
 	Data   interface{} `json:"data"`
-	Status uint        `json:"status"`
+	Status int         `json:"status"`
 }
 
-func SuccessWithData(c *gin.Context, msg string, data interface{}) {
+type Error struct {
+	Status int
+	Msg    string
+}
+
+func SuccessWithData(c *gin.Context, msg string, data interface{}, status int) {
 	c.JSON(http.StatusOK, Response{
 		Msg:    msg,
 		Data:   data,
@@ -20,7 +25,7 @@ func SuccessWithData(c *gin.Context, msg string, data interface{}) {
 	})
 }
 
-func SuccessWithNoData(c *gin.Context, msg string) {
+func SuccessWithNoData(c *gin.Context, msg string, status int) {
 	c.JSON(http.StatusOK, Response{
 		Msg:    msg,
 		Data:   nil,
@@ -28,10 +33,9 @@ func SuccessWithNoData(c *gin.Context, msg string) {
 	})
 }
 
-func FailBadRequest(c *gin.Context, msg string, err error) {
-	c.JSON(http.StatusBadRequest, Response{
-		Data:   nil,
-		Msg:    msg,
+func FailBadRequest(c *gin.Context, status int, msg string) {
+	c.JSON(http.StatusBadRequest, Error{
 		Status: 400,
+		Msg:    msg,
 	})
 }
