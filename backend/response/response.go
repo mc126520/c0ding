@@ -12,19 +12,10 @@ type Response struct {
 	Status int         `json:"status"`
 }
 
-func SuccessWithData(c *gin.Context, msg string, data interface{}, status int) {
+func Success(c *gin.Context, status int, msg string) {
 	c.JSON(http.StatusOK, Response{
-		Msg:    msg,
-		Data:   data,
 		Status: 200,
-	})
-}
-
-func SuccessWithNoData(c *gin.Context, msg string, status int) {
-	c.JSON(http.StatusOK, Response{
 		Msg:    msg,
-		Data:   nil,
-		Status: 200,
 	})
 }
 
